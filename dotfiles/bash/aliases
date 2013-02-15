@@ -1,0 +1,4 @@
+alias gt="git status"
+alias h="history"
+alias ..="cd .."
+alias v="vim"
