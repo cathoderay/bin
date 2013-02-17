@@ -6,6 +6,15 @@
 
 PREFIX="$HOME/bin/dotfiles"
 
+SSH_SRC="$HOME/.ssh/config"
+SSH_TGT="$PREFIX/ssh/config"
+
+VIM_SRC="$HOME/.vimrc"
+VIM_TGT="$PREFIX/vim/vimrc"
+
+GIT_SRC="$HOME/.gitconfig"
+GIT_TGT="$PREFIX/git/gitconfig"
+
 
 function set_link {
     SRC="$1"
@@ -23,12 +32,12 @@ function set_link {
 
 
 case $1 in
-    '--ssh') set_link "$HOME/.ssh/config" "$PREFIX/ssh/config";;
-    '--vim') set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc";;
-    '--git') set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig";;
+    '--ssh') set_link $SSH_SRC $SSH_TGT;;
+    '--vim') set_link $VIM_SRC $VIM_TGT;;
+    '--git') set_link $GIT_SRC $GIT_TGT;;
     *)
-        set_link "$HOME/.ssh/config" "$PREFIX/ssh/config"
-        set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc" 
-        set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig"
+        set_link $SSH_SRC $SSH_TGT
+        set_link $VIM_SRC $VIM_TGT
+        set_link $GIT_SRC $GIT_TGT
         ;;
 esac
