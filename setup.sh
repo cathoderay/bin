@@ -44,7 +44,7 @@ function add_line {
     local LINE="$1"
     local FILE="$2"
         
-    if [ ! -s "$FILE" ]; then
+    if [ ! -f "$FILE" ]; then
         echo -e "\e[1;34mFile: $FILE does not exists. \e[0m"
         return 1        
     fi
