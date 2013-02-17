@@ -4,41 +4,12 @@
 # Description: setup dotfiles and custom scripts
 #
 
-
 PREFIX="$HOME/bin/dotfiles"
 
 
-function set_ssh {
-    SRC="$HOME/.ssh/config"
-    TGT="$PREFIX/ssh/config"
-
-    if [ -s "$SRC" ]; then
-        echo "$SRC already exists."
-    else
-        ln -s $TGT $SRC
-        if [ "$?" = 0 ]; then
-            echo "$SRC configured!"
-        fi
-    fi
-}
-
-function set_vim {
-    SRC="$HOME/.vimrc"
-    TGT="$PREFIX/vim/vimrc"
-
-    if [ -s "$SRC" ]; then
-        echo "$SRC already exists."
-    else
-        ln -s $TGT $SRC 
-        if [ "$?" = 0 ]; then
-            echo "$SRC configured!"
-        fi
-    fi
-}
-
-function set_git {
-    SRC="$HOME/.gitconfig"
-    TGT="$PREFIX/git/gitconfig"
+function set_link {
+    SRC="$1"
+    TGT="$2"
 
     if [ -s "$SRC" ]; then
         echo "$SRC already exists."
@@ -52,12 +23,12 @@ function set_git {
 
 
 case $1 in
-    '--ssh') set_ssh ;;
-    '--git') set_git ;;
-    '--vim') set_vim ;;
+    '--ssh') set_link "$HOME/.ssh/config" "$PREFIX/ssh/config";;
+    '--vim') set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc";;
+    '--git') set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig";;
     *)
-        set_ssh
-        set_git
-        set_vim
+        set_link "$HOME/.ssh/config" "$PREFIX/ssh/config"
+        set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc" 
+        set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig"
         ;;
 esac
