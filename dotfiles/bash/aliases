@@ -1,14 +1,36 @@
 #!/bin/bash
 
-alias gt="git status"
-alias h="history"
-alias ..="cd .."
-alias v="vim"
-
-# command counter
-function cc() {
+command_counter() {
     history | 
       awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | 
       sort -rn | 
       head
 }
+
+command_exists() {
+    command -v $1 &>/dev/null; # check $?
+}
+
+now() {
+    echo $(date +%s)000;
+}
+
+debug() {
+    [ $1 -le $DEBUG ] && echo -e "\033[33;1m[DEBUG] $*\033[m"
+}
+
+pyc_cleaner() {
+    find . -name "*.pyc" -delete
+}
+
+prime() {
+    factor $(seq $1 $2) | awk -F': ' '{print $2}' | grep -oe '^[0-9]\+$'
+}
+
+alias gt="git status"
+alias h="history"
+alias ..="cd .."
+alias v="vim"
+alias cc="command_counter"
+alias ce="command_exists"
+alias pycc="pyc_cleaner"
