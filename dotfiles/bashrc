@@ -2,3 +2,4 @@
 . ~/bin/dotfiles/bash/config
 . ~/bin/dotfiles/bash/aliases
 
+. ~/.local/bin/bashmarks.sh
