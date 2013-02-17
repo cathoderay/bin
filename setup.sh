@@ -17,9 +17,8 @@ function set_link {
     if [ -s "$SRC" ]; then
         echo -e "\e[0;34m $SRC already exists. \e[0m"
         return 1
-    else
-        ln -s $TGT $SRC && echo -e "\e[0;32m $SRC configured! \e[0m"
     fi
+    ln -s $TGT $SRC && echo -e "\e[0;32m $SRC configured! \e[0m"
 }
 
 function set_ssh {
@@ -50,6 +49,8 @@ function add_line {
         echo "$LINE" >> "$FILE"
         if [ "$?" = 0 ]; then
             echo -e "\e[0;32mLine: \"$LINE\" added to $FILE!\e[0m"
+        else
+            return 1
         fi
     else
         echo -e "\e[0;34mLine: \"$LINE\" already exists in $FILE. \e[0m"
