@@ -21,21 +21,15 @@ function set_link {
 }
 
 function set_ssh {
-    SSH_SRC="$HOME/.ssh/config"
-    SSH_TGT="$PREFIX/ssh/config"
-    set_link $SSH_SRC $SSH_TGT
+    set_link "$HOME/.ssh/config" "$PREFIX/ssh/config"
 }
 
 function set_vim {
-    VIM_SRC="$HOME/.vimrc"
-    VIM_TGT="$PREFIX/vim/vimrc"
-    set_link $VIM_SRC $VIM_TGT 
+    set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc" 
 }
 
 function set_git {
-    GIT_SRC="$HOME/.gitconfig"
-    GIT_TGT="$PREFIX/git/gitconfig"
-    set_link $GIT_SRC $GIT_TGT 
+    set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig"
 }
 
 case $1 in
