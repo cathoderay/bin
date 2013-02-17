@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# File: setup_dotfiles.sh
+# File: setup.sh
 # Description: setup dotfiles and custom scripts
 #
 
