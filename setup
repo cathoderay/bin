@@ -1,7 +1,9 @@
 #!/bin/bash
 #
-# File: setup.sh
+# File: setup
 # Description: setup dotfiles and custom scripts
+# Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
+#
 #
 
 PREFIX="$HOME/bin/dotfiles"
