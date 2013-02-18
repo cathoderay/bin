@@ -6,11 +6,11 @@
 
 PREFIX="$HOME/bin/dotfiles"
 
-function task_done {
+task_done() {
     echo -e "\e[1;32mDone!\e[0m"
 }
 
-function set_link {
+set_link() {
     local SRC="$1"
     local TGT="$2"
 
@@ -21,22 +21,22 @@ function set_link {
     ln -s $TGT $SRC && echo -e "\e[0;32m $SRC configured! \e[0m"
 }
 
-function set_ssh {
+set_ssh() {
     echo -e "\e[1;33m[ssh]\e[0m"
     set_link "$HOME/.ssh/config" "$PREFIX/ssh/config" && task_done
 }
 
-function set_vim {
+set_vim() {
     echo -e "\e[1;33m[vim]\e[0m"
     set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc" && task_done
 }
 
-function set_git {
+set_git() {
     echo -e "\e[1;33m[git]\e[0m"
     set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig" && task_done
 }
 
-function add_line {
+add_line() {
     local LINE="$1"
     local FILE="$2"
         
@@ -57,7 +57,7 @@ function add_line {
     fi
 }
     
-function set_bashmarks {
+set_bashmarks() {
     echo -e "\e[1;33m[bashmarks]\e[0m"
     git clone git://github.com/huyng/bashmarks.git /tmp/bashmarks
     if [ ! "$?" = 0 ]; then
@@ -73,24 +73,43 @@ function set_bashmarks {
         task_done
 }
 
-function set_bashrc {
+set_bashrc() {
     echo -e "\e[1;33m[bashrc]\e[0m"
     touch ~/.bashrc && 
         add_line ". $PREFIX/bashrc" ~/.bashrc &&
         task_done
 }
 
-case $1 in
-    '--bashrc') set_bashrc;;
-    '--ssh') set_ssh;;
-    '--vim') set_vim;;
-    '--git') set_git;;
-    '--bashmarks') set_bashmarks;;
-    *)
-        set_bashrc
-        set_ssh
-        set_vim
-        set_git
-        set_bashmarks
-        ;;
-esac
+print_help() {
+    echo "Usage: $(basename $0) [OPTIONS]
+
+OPTIONS:
+    -a, --all
+    -r, --bashrc
+    -v, --vim
+    -s, --ssh
+    -g, --git
+    -k, --bashmarks
+    -h, --help"
+}
+
+while [ -n "$1" ]
+do
+    case $1 in
+        -r | --bashrc) set_bashrc ;;
+        -s | --ssh) set_ssh ;;
+        -v | --vim) set_vim ;;
+        -g | --git) set_git ;;
+        -k | --bashmarks) set_bashmarks ;;
+        -a | --all)
+            set_bashrc
+            set_ssh
+            set_vim
+            set_git
+            set_bashmarks
+            ;;
+        -h | --help) print_help;;
+        *) echo "Invalid option: $1" && print_help
+    esac
+    shift
+done
