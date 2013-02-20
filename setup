@@ -102,6 +102,7 @@ OPTIONS:
     -s, --ssh
     -g, --git
     -k, --bashmarks
+    -p, --perlbrew
     -h, --help"
 }
 
