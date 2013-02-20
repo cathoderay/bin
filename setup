@@ -1,12 +1,13 @@
 #!/bin/bash
 #
 # File: setup
-# Description: setup dotfiles and custom scripts
+# Description: setup dotfiles, custom scripts and desirable packages
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
 #
 
-PREFIX="$HOME/bin/dotfiles"
+BIN="$HOME/bin"
+PREFIX="$BIN/dotfiles"
 
 task_done() {
     echo -e "\e[1;32mDone!\e[0m"
@@ -82,6 +83,10 @@ set_bashrc() {
         task_done
 }
 
+install_packages() {
+    sudo apt-get install $(cat "$BIN/packages")
+}
+
 print_help() {
     echo "Usage: $(basename $0) [OPTIONS]
 
@@ -92,6 +97,7 @@ OPTIONS:
     -s, --ssh
     -g, --git
     -k, --bashmarks
+    -p, --packages
     -h, --help"
 }
 
@@ -103,12 +109,14 @@ do
         -v | --vim) set_vim ;;
         -g | --git) set_git ;;
         -k | --bashmarks) set_bashmarks ;;
+        -p | --packages) install_packages ;;
         -a | --all)
             set_bashrc
             set_ssh
             set_vim
             set_git
             set_bashmarks
+            install_packages
             ;;
         -h | --help) print_help;;
         *) echo "Invalid option: $1" && print_help
