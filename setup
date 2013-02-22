@@ -1,13 +1,12 @@
 #!/bin/bash
 #
 # File: setup
-# Description: setup dotfiles, custom scripts and desirable packages
+# Description: setup environment
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
-#
+# TODO: remove duplicate color codes
 
-BIN="$HOME/bin"
-PREFIX="$BIN/dotfiles"
+PREFIX="$HOME/bin/dotfiles"
 
 task_done() {
     echo -e "\e[1;32mDone!\e[0m"
@@ -83,8 +82,22 @@ set_bashrc() {
         task_done
 }
 
+set_perlbrew() {
+    echo -e "\e[1;33m[perlbrew]\e[0m"
+    curl -kLO http://xrl.us/perlbrew && 
+    perl perlbrew self-install &&
+    $HOME/perl5/perlbrew/bin/perlbrew init && 
+    echo ". $HOME/perl5/perlbrew/etc/bashrc" >> "$PREFIX/bashrc" &&
+    rm perlbrew &&
+    task_done
+}
+
 install_packages() {
-    sudo apt-get install $(cat "$BIN/packages")
+    echo -e "\e[1;33m[packages]\e[0m"
+    if [ ! "$(uname -v | grep Ubunta)" = 0 ]; then
+        sudo apt-get install $(cat .packages.debian) &&
+        task_done
+    fi
 }
 
 print_help() {
@@ -97,6 +110,7 @@ OPTIONS:
     -s, --ssh
     -g, --git
     -k, --bashmarks
+    -b, --perlbrew
     -p, --packages
     -h, --help"
 }
@@ -109,6 +123,7 @@ do
         -v | --vim) set_vim ;;
         -g | --git) set_git ;;
         -k | --bashmarks) set_bashmarks ;;
+        -b | --perlbrew) set_perlbrew ;;
         -p | --packages) install_packages ;;
         -a | --all)
             set_bashrc
@@ -116,6 +131,7 @@ do
             set_vim
             set_git
             set_bashmarks
+            set_perlbrew
             install_packages
             ;;
         -h | --help) print_help;;
