@@ -87,7 +87,7 @@ set_perlbrew() {
     curl -kLO http://xrl.us/perlbrew && 
     perl perlbrew self-install &&
     $HOME/perl5/perlbrew/bin/perlbrew init && 
-    echo ". $HOME/perl5/perlbrew/etc/bashrc" >> "$PREFIX/bashrc" &&
+    add_line ". $HOME/perl5/perlbrew/etc/bashrc" "$PREFIX/bashrc" &&
     rm perlbrew &&
     task_done
 }
