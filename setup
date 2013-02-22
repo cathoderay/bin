@@ -94,10 +94,13 @@ set_perlbrew() {
 
 install_packages() {
     echo -e "\e[1;33m[packages]\e[0m"
-    if [ ! "$(uname -v | grep Ubunta)" = 0 ]; then
+    uname -v | grep Ubuntu
+    if [ "$?" = 0 ]; then
         sudo apt-get install $(cat .packages.debian) &&
-        task_done
+        task_done && 
+        return 0
     fi
+    echo -e "\e[1;31mDon't know this OS\e[0m"
 }
 
 print_help() {
