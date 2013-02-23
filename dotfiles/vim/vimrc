@@ -44,14 +44,8 @@ map <F3> <Esc>:%s/\s\+$//<CR>
 
 "PLUGINS SESSION-------------
 
+call pathogen#infect()
+call pathogen#helptags()
+
 "autoload NERDTree
-au VimEnter *  NERDTree
-
-"fuzzy finder
-"map <Leader>t :FuzzyFinderTextMate<Enter>
-
-
-"pydiction
-"filetype plugin on
-"let g:pydiction_location="/home/kaiser/.vim/complete-dict"
-
+"au VimEnter *  NERDTree
