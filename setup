@@ -4,8 +4,6 @@
 # Description: setup environment
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
-# TODO: check if perlbrew is installed
-# TODO: check if bashmarks is installed
 
 CONF="$HOME/bin/conf"
 DOTFILES="$HOME/bin/dotfiles"
@@ -118,6 +116,10 @@ add_line() {
 
 set_bashmarks() {
     task bashmarks
+    if [ -s $HOME/.local/bin/bashmarks.sh ]; then
+        pgreen "bashmarks already installed."
+        return 0
+    fi
     git clone git://github.com/huyng/bashmarks.git /tmp/bashmarks
     if [ ! "$?" = 0 ]; then
         pred "Problem during repository cloning"
@@ -141,6 +143,12 @@ set_bashrc() {
 
 set_perlbrew() {
     task perlbrew
+    command_exists perlbrew
+    if [ "$?" = 0 ]; then
+        pgreen "perlbrew already configured."
+        task_done
+        return 0
+    fi
     curl -kLO http://xrl.us/perlbrew &&
     perl perlbrew self-install &&
     $HOME/perl5/perlbrew/bin/perlbrew init &&
