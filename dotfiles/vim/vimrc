@@ -51,5 +51,5 @@ call pathogen#helptags()
 au VimEnter *  NERDTree
 
 "fuzzy finder
-map ,f :FufFile **/<CR>
+map ,f :FufFile<CR>
 
