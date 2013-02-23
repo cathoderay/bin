@@ -5,7 +5,7 @@
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
 
-BIN="$HOME/bin"
+CONF="$HOME/conf"
 DOTFILES="$HOME/bin/dotfiles"
 
 task() {
@@ -49,8 +49,9 @@ set_pathogen() {
 
 set_plugins() {
     subtask plugins
-    mkdir -p ~/.vim/bundle && cd ~/.vim/bundle &&
-    cat $BIN/.plugins.vim | while read line; do git clone $line; done &&
+    mkdir -p ~/.vim/bundle && 
+    cd ~/.vim/bundle &&
+    cat $CONF/plugins.vim | while read line; do git clone $line; done && 
     cd - &&
     subtask_done
 }
@@ -126,7 +127,7 @@ install_packages() {
     task packages
     uname -v | grep Ubuntu
     if [ "$?" = 0 ]; then
-        sudo apt-get install $(cat $BIN/.packages.debian) &&
+        sudo apt-get install $(cat $CONF/packages.debian) &&
         task_done && 
         return 0
     fi
