@@ -13,12 +13,13 @@ DOTFILES="$HOME/bin/dotfiles"
 . $DOTFILES/bash/config # color codes, etc
 . $DOTFILES/bash/aliases # helper functions
 
+
 task() {
-    pbyellow "[$1]"
+    echo "" && pbyellow "[ $1 ]"
 }
 
 subtask() {
-    pbpurple "[$1]"
+    pbpurple ">[ $1 ]"
 }
 
 subtask_done() {
@@ -35,24 +36,25 @@ set_link() {
 
     if [ -s "$SRC" ]; then
         if [ -L "$SRC" ] && [ "$(readlink $SRC)" = "$TGT" ]; then
-            echo -e "\e[0;32m$SRC already configured\e[0m";
+            pgreen "$SRC already configured.";
             return 0
         fi
-        echo -e "\e[0;34m $SRC already exists.\e[0m"
+        pred "$SRC already exists."
         return 1
     fi
-    ln -s $TGT $SRC && echo -e "\e[0;32m$SRC configured!\e[0m"
+    ln -s $TGT $SRC && pgreen "$SRC configured!"
 }
 
 set_ssh() {
     task ssh
+    mkdir -p $HOME/.ssh &&
     set_link "$HOME/.ssh/config" "$DOTFILES/ssh/config" && task_done
 }
 
 set_pathogen() {
     subtask pathogen
     if [ -d ~/.vim/autoload ]; then
-        echo -e "\e[0;32mpathogen already configured\e[0m";
+        pgreen "pathogen already configured."
         subtask_done
         return 0
     fi
@@ -70,9 +72,9 @@ set_plugins() {
         local PLUGIN=$($(echo basename $line) | sed 's/\(.*\).git$/\1/g')
         if [ ! -d "$PLUGIN" ]; then
             git clone $line &&
-            echo -e "\e[0;32m$PLUGIN configured!\e[0m";
+            pgreen "$PLUGIN configured!"
         else
-            echo -e "\e[0;32m$PLUGIN already configured\e[0m";
+            pgreen "$PLUGIN already configured."
         fi
     done &&
     cd - &&
@@ -97,19 +99,19 @@ add_line() {
     local FILE="$2"
 
     if [ ! -f "$FILE" ]; then
-        echo -e "\e[0;34mFile: $FILE does not exist. \e[0m"
+        pred "$FILE does not exist."
         return 1
     fi
     grep "$LINE" "$FILE"
     if [ ! "$?" = 0 ]; then
         echo "$LINE" >> "$FILE"
         if [ "$?" = 0 ]; then
-            echo -e "\e[0;32mLine: \"$LINE\" added to $FILE!\e[0m"
+            pgreen "'$LINE' appended to $FILE!"
         else
             return 1
         fi
     else
-        echo -e "\e[0;34mLine: \"$LINE\" already exists in $FILE. \e[0m"
+        pgreen "'$LINE' already exists in $FILE."
     fi
 }
 
@@ -117,7 +119,7 @@ set_bashmarks() {
     task bashmarks
     git clone git://github.com/huyng/bashmarks.git /tmp/bashmarks
     if [ ! "$?" = 0 ]; then
-        echo -e "\e[1;31mProblem during repository cloning.\e[0m"
+        pred "Problem during repository cloning"
         return 1
     fi
 
@@ -154,7 +156,7 @@ install_packages() {
         task_done &&
         return 0
     fi
-    echo -e "\e[1;31mDon't know this OS\e[0m"
+    pred "Don't know this OS"
 }
 
 print_help() {
