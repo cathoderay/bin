@@ -53,20 +53,21 @@ set_ssh() {
 
 set_pathogen() {
     subtask pathogen
-    if [ -d ~/.vim/autoload ]; then
+    if [ -d $HOME/.vim/autoload ]; then
         pgreen "pathogen already configured."
         subtask_done
         return 0
     fi
-    mkdir -p ~/.vim/autoload &&
-    wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O ~/.vim/autoload/pathogen.vim &&
+    mkdir -p $HOME/.vim/autoload &&
+    wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O $HOME/.vim/autoload/pathogen.vim &&
     subtask_done
 }
 
 set_plugins() {
     subtask plugins
-    mkdir -p ~/.vim/bundle &&
-    cd ~/.vim/bundle &&
+    BUNDLE="$HOME/.vim/bundle"
+    mkdir -p $BUNDLE &&
+    cd $BUNDLE &&
     cat $CONF/plugins.vim | while read line
     do
         local PLUGIN=$($(echo basename $line) | sed 's/\(.*\).git$/\1/g')
@@ -125,7 +126,7 @@ set_bashmarks() {
 
     cd /tmp/bashmarks &&
         make install >/dev/null &&
-        add_line ". ~/.local/bin/bashmarks.sh" "$DOTFILES/bashrc" &&
+        add_line ". $HOME/.local/bin/bashmarks.sh" "$DOTFILES/bashrc" &&
         cd - &&
         rm -rf /tmp/bashmarks &&
         task_done
@@ -133,8 +134,8 @@ set_bashmarks() {
 
 set_bashrc() {
     task bashrc
-    touch ~/.bashrc &&
-        add_line ". $DOTFILES/bashrc" ~/.bashrc &&
+    touch $HOME/.bashrc &&
+        add_line ". $DOTFILES/bashrc" $HOME/.bashrc &&
         task_done
 }
 
