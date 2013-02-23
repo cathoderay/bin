@@ -5,7 +5,7 @@
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
 
-PREFIX="$HOME/bin/dotfiles"
+DOTFILES="$HOME/bin/dotfiles"
 
 task() {
     echo -e "\e[1;33m[$1]\e[0m"
@@ -28,17 +28,17 @@ set_link() {
 
 set_ssh() {
     task ssh
-    set_link "$HOME/.ssh/config" "$PREFIX/ssh/config" && task_done
+    set_link "$HOME/.ssh/config" "$DOTFILES/ssh/config" && task_done
 }
 
 set_vim() {
     task vim
-    set_link "$HOME/.vimrc" "$PREFIX/vim/vimrc" && task_done
+    set_link "$HOME/.vimrc" "$DOTFILES/vim/vimrc" && task_done
 }
 
 set_git() {
     task git
-    set_link "$HOME/.gitconfig" "$PREFIX/git/gitconfig" && task_done
+    set_link "$HOME/.gitconfig" "$DOTFILES/git/gitconfig" && task_done
 }
 
 add_line() {
@@ -72,7 +72,7 @@ set_bashmarks() {
 
     cd /tmp/bashmarks && 
         make install >/dev/null &&
-        add_line ". ~/.local/bin/bashmarks.sh" "$PREFIX/bashrc" &&
+        add_line ". ~/.local/bin/bashmarks.sh" "$DOTFILES/bashrc" &&
         cd - &&
         rm -rf /tmp/bashmarks && 
         task_done
@@ -81,7 +81,7 @@ set_bashmarks() {
 set_bashrc() {
     task bashrc
     touch ~/.bashrc && 
-        add_line ". $PREFIX/bashrc" ~/.bashrc &&
+        add_line ". $DOTFILES/bashrc" ~/.bashrc &&
         task_done
 }
 
@@ -90,7 +90,7 @@ set_perlbrew() {
     curl -kLO http://xrl.us/perlbrew && 
     perl perlbrew self-install &&
     $HOME/perl5/perlbrew/bin/perlbrew init && 
-    add_line ". $HOME/perl5/perlbrew/etc/bashrc" "$PREFIX/bashrc" &&
+    add_line ". $HOME/perl5/perlbrew/etc/bashrc" "$DOTFILES/bashrc" &&
     rm perlbrew &&
     task_done
 }
