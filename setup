@@ -10,20 +10,23 @@
 CONF="$HOME/bin/conf"
 DOTFILES="$HOME/bin/dotfiles"
 
+. $DOTFILES/bash/config # color codes, etc
+. $DOTFILES/bash/aliases # helper functions
+
 task() {
-    echo -e "\e[1;33m[$1]\e[0m"
+    pbyellow "[$1]"
 }
 
 subtask() {
-    echo -e "\e[1;36m[$1]\e[0m"
+    pbpurple "[$1]"
 }
 
 subtask_done() {
-    echo -e "\e[1;32msubtask done!\e[0m"
+    pbgreen "subtask done!"
 }
 
 task_done() {
-    echo -e "\e[1;32mtask done!\e[0m"
+    pbgreen "task done!"
 }
 
 set_link() {
