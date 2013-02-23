@@ -5,7 +5,7 @@
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
 
-CONF="$HOME/conf"
+CONF="$HOME/bin/conf"
 DOTFILES="$HOME/bin/dotfiles"
 
 task() {
