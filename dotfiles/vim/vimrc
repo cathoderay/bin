@@ -48,4 +48,4 @@ call pathogen#infect()
 call pathogen#helptags()
 
 "autoload NERDTree
-"au VimEnter *  NERDTree
+au VimEnter *  NERDTree
