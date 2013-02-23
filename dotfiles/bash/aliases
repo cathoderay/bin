@@ -55,6 +55,34 @@ pwhite() {
     echo -e "$White$1$Color_Off"
 }
 
+pbred() {
+    echo -e "$BRed$1$Color_Off"
+}
+
+pbgreen() {
+    echo -e "$BGreen$1$Color_Off"
+}
+
+pbyellow() {
+    echo -e "$BYellow$1$Color_Off"
+}
+
+pbblue() {
+    echo -e "$BBlue$1$Color_Off"
+}
+
+pbpurple() {
+    echo -e "$BPurple$1$Color_Off"
+}
+
+pbcyan() {
+    echo -e "$BCyan$1$Color_Off"
+}
+
+pbwhite() {
+    echo -e "$BWhite$1$Color_Off"
+}
+
 alias gt="git status"
 alias h="history"
 alias ..="cd .."
