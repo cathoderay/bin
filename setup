@@ -30,13 +30,13 @@ set_link() {
 
     if [ -s "$SRC" ]; then
         if [ -L "$SRC" ] && [ "$(readlink $SRC)" = "$TGT" ]; then
-            echo -e "\e[0;32m$SRC already configured";
+            echo -e "\e[0;32m$SRC already configured\e[0m";
             return 0
         fi
-        echo -e "\e[0;34m $SRC already exists. \e[0m"
+        echo -e "\e[0;34m $SRC already exists.\e[0m"
         return 1
     fi
-    ln -s $TGT $SRC && echo -e "\e[0;32m$SRC configured! \e[0m"
+    ln -s $TGT $SRC && echo -e "\e[0;32m$SRC configured!\e[0m"
 }
 
 set_ssh() {
@@ -47,7 +47,7 @@ set_ssh() {
 set_pathogen() {
     subtask pathogen
     if [ -d ~/.vim/autoload ]; then
-        echo -e "\e[0;32mpathogen already configured";
+        echo -e "\e[0;32mpathogen already configured\e[0m";
         subtask_done
         return 0
     fi
@@ -62,7 +62,13 @@ set_plugins() {
     cd ~/.vim/bundle &&
     cat $CONF/plugins.vim | while read line
     do
-        git clone $line;
+        local PLUGIN=$($(echo basename $line) | sed 's/\(.*\).git$/\1/g')
+        if [ ! -d "$PLUGIN" ]; then
+            git clone $line &&
+            echo -e "\e[0;32m$PLUGIN configured!\e[0m";
+        else
+            echo -e "\e[0;32m$PLUGIN already configured\e[0m";
+        fi
     done &&
     cd - &&
     subtask_done
