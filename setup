@@ -32,6 +32,7 @@ set_ssh() {
 }
 
 set_vim() {
+    # TODO: configure pathogen and plugins
     task vim
     set_link "$HOME/.vimrc" "$DOTFILES/vim/vimrc" && task_done
 }
