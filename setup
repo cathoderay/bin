@@ -4,6 +4,8 @@
 # Description: setup environment
 # Author: Ronald Kaiser <raios DOT catodicos AT gmail DOT com>
 #
+# TODO: check if perlbrew is installed
+# TODO: check if bashmarks is installed
 
 CONF="$HOME/bin/conf"
 DOTFILES="$HOME/bin/dotfiles"
