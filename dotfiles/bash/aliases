@@ -27,6 +27,34 @@ prime() {
     factor $(seq $1 $2) | awk -F': ' '{print $2}' | grep -oe '^[0-9]\+$'
 }
 
+pred() {
+    echo -e "$Red$1$Color_Off"
+}
+
+pgreen() {
+    echo -e "$Green$1$Color_Off"
+}
+
+pyellow() {
+    echo -e "$Yellow$1$Color_Off"
+}
+
+pblue() {
+    echo -e "$Blue$1$Color_Off"
+}
+
+ppurple() {
+    echo -e "$Purple$1$Color_Off"
+}
+
+pcyan() {
+    echo -e "$Cyan$1$Color_Off"
+}
+
+pwhite() {
+    echo -e "$White$1$Color_Off"
+}
+
 alias gt="git status"
 alias h="history"
 alias ..="cd .."
