@@ -30,8 +30,7 @@ set mouse=a
 set incsearch
 
 "colorscheme 
-"colorscheme evening
-"colorscheme ron 
+colorscheme evening
 
 "history size
 set history=1000
@@ -52,4 +51,5 @@ au VimEnter *  NERDTree
 
 "fuzzy finder
 map ,f :FufFile<CR>
+
 
