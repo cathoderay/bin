@@ -35,6 +35,8 @@ colorscheme evening
 "history size
 set history=1000
 
+au BufNewFile,BufRead *.tt set filetype=html
+
 
 "SHORTCUTS------------------
 "remove trailing spaces
