@@ -157,6 +157,7 @@ set_perlbrew() {
     task_done
 }
 
+# TODO: similar code with perlbrew, refactor
 set_pythonbrew() {
     task pythonbrew
     command_exists pythonbrew
