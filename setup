@@ -157,6 +157,19 @@ set_perlbrew() {
     task_done
 }
 
+set_pythonbrew() {
+    task pythonbrew
+    command_exists pythonbrew
+    if [ "$?" = 0 ]; then
+        pgreen "pythonbrew already configured."
+        task_done
+        return 0
+    fi
+    curl -kL http://xrl.us/pythonbrewinstall | bash &&
+    add_line ". $HOME/.pythonbrew/etc/bashrc" "$DOTFILES/bashrc" &&
+    task_done
+}
+
 install_packages() {
     task packages
     uname -v | grep Ubuntu
@@ -192,6 +205,7 @@ do
         -g | --git) set_git ;;
         -k | --bashmarks) set_bashmarks ;;
         -b | --perlbrew) set_perlbrew ;;
+        -y | --pythonbrew) set_pythonbrew ;;
         -p | --packages) install_packages ;;
         -a | --all)
             set_bashrc
@@ -199,6 +213,7 @@ do
             set_vim
             set_git
             set_bashmarks
+            set_pythonbrew
             set_perlbrew
             install_packages
             ;;
