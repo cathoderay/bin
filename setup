@@ -8,46 +8,37 @@
 CONF="$HOME/bin/conf"
 DOTFILES="$HOME/bin/dotfiles"
 
-. $DOTFILES/bash/config # color codes, etc
-. $DOTFILES/bash/aliases # helper functions
+. $DOTFILES/bash/config
+. $DOTFILES/bash/aliases 
+. $DOTFILES/bash/functions
 
 
 task() {
     echo "" && pbyellow "[ $1 ]"
 }
 
+
 subtask() {
     pbpurple ">[ $1 ]"
 }
+
 
 subtask_done() {
     pbgreen "subtask done!"
 }
 
+
 task_done() {
     pbgreen "task done!"
 }
 
-set_link() {
-    local SRC="$1"
-    local TGT="$2"
-
-    if [ -s "$SRC" ]; then
-        if [ -L "$SRC" ] && [ "$(readlink $SRC)" = "$TGT" ]; then
-            pgreen "$SRC already configured.";
-            return 0
-        fi
-        pred "$SRC already exists."
-        return 1
-    fi
-    ln -s $TGT $SRC && pgreen "$SRC configured!"
-}
 
 set_ssh() {
     task ssh
     mkdir -p $HOME/.ssh &&
     set_link "$HOME/.ssh/config" "$DOTFILES/ssh/config" && task_done
 }
+
 
 set_pathogen() {
     subtask pathogen
@@ -60,6 +51,7 @@ set_pathogen() {
     wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O $HOME/.vim/autoload/pathogen.vim &&
     subtask_done
 }
+
 
 set_plugins() {
     subtask plugins
@@ -80,6 +72,7 @@ set_plugins() {
     subtask_done
 }
 
+
 set_vim() {
     task vim
     set_link "$HOME/.vimrc" "$DOTFILES/vim/vimrc" &&
@@ -88,31 +81,12 @@ set_vim() {
     task_done
 }
 
+
 set_git() {
     task git
     set_link "$HOME/.gitconfig" "$DOTFILES/git/gitconfig" && task_done
 }
 
-add_line() {
-    local LINE="$1"
-    local FILE="$2"
-
-    if [ ! -f "$FILE" ]; then
-        pred "$FILE does not exist."
-        return 1
-    fi
-    grep "$LINE" "$FILE"
-    if [ ! "$?" = 0 ]; then
-        echo "$LINE" >> "$FILE"
-        if [ "$?" = 0 ]; then
-            pgreen "'$LINE' appended to $FILE!"
-        else
-            return 1
-        fi
-    else
-        pgreen "'$LINE' already exists in $FILE."
-    fi
-}
 
 set_bashmarks() {
     task bashmarks
@@ -134,12 +108,14 @@ set_bashmarks() {
         task_done
 }
 
+
 set_bashrc() {
     task bashrc
     touch $HOME/.bashrc &&
         add_line ". $DOTFILES/bashrc" $HOME/.bashrc &&
         task_done
 }
+
 
 set_perlbrew() {
     task perlbrew
@@ -157,6 +133,7 @@ set_perlbrew() {
     task_done
 }
 
+
 # TODO: similar code with perlbrew, refactor
 set_pythonbrew() {
     task pythonbrew
@@ -171,6 +148,7 @@ set_pythonbrew() {
     task_done
 }
 
+
 install_packages() {
     task packages
     uname -v | grep Ubuntu
@@ -181,6 +159,7 @@ install_packages() {
     fi
     pred "Don't know this OS"
 }
+
 
 print_help() {
     echo "Usage: $(basename $0) [OPTIONS]
@@ -196,6 +175,7 @@ OPTIONS:
     -p, --packages
     -h, --help"
 }
+
 
 while [ -n "$1" ]
 do

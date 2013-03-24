@@ -1,0 +1,163 @@
+#!/bin/bash
+
+command_counter() {
+    history | 
+      awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | 
+      sort -rn | 
+      head
+}
+export -f command_counter
+
+
+command_exists() {
+    command -v $1 &>/dev/null; # check $?
+}
+export -f command_exists
+
+
+now() {
+    echo $(date +%s)000;
+}
+export -f now
+
+
+debug() {
+    [ $1 -le $DEBUG ] && echo -e "\033[33;1m[DEBUG] $*\033[m"
+}
+export -f debug
+
+
+pyc_cleaner() {
+    find . -name "*.pyc" -delete
+}
+export -f pyc_cleaner
+
+
+prime() {
+    factor $(seq $1 $2) | awk -F': ' '{print $2}' | grep -oe '^[0-9]\+$'
+}
+export -f prime
+
+
+pred() {
+    echo -e "$Red$1$Color_Off"
+}
+export -f pred
+
+
+pgreen() {
+    echo -e "$Green$1$Color_Off"
+}
+export -f pgreen
+
+
+pyellow() {
+    echo -e "$Yellow$1$Color_Off"
+}
+export -f pyellow
+
+
+pblue() {
+    echo -e "$Blue$1$Color_Off"
+}
+export -f pblue
+
+
+ppurple() {
+    echo -e "$Purple$1$Color_Off"
+}
+export -f ppurple
+
+
+pcyan() {
+    echo -e "$Cyan$1$Color_Off"
+}
+export -f pcyan
+
+
+pwhite() {
+    echo -e "$White$1$Color_Off"
+}
+export -f pwhite
+
+
+pbred() {
+    echo -e "$BRed$1$Color_Off"
+}
+export -f pbred
+
+
+pbgreen() {
+    echo -e "$BGreen$1$Color_Off"
+}
+export -f pbgreen
+
+
+pbyellow() {
+    echo -e "$BYellow$1$Color_Off"
+}
+export -f pbyellow
+
+
+pbblue() {
+    echo -e "$BBlue$1$Color_Off"
+}
+export -f pbblue
+
+
+pbpurple() {
+    echo -e "$BPurple$1$Color_Off"
+}
+export -f pbpurple
+
+
+pbcyan() {
+    echo -e "$BCyan$1$Color_Off"
+}
+export -f pbcyan
+
+
+pbwhite() {
+    echo -e "$BWhite$1$Color_Off"
+}
+export -f pbwhite
+
+
+add_line() {
+    local LINE="$1"
+    local FILE="$2"
+
+    if [ ! -f "$FILE" ]; then
+        pred "$FILE does not exist."
+        return 1
+    fi
+    grep "$LINE" "$FILE"
+    if [ ! "$?" = 0 ]; then
+        echo "$LINE" >> "$FILE"
+        if [ "$?" = 0 ]; then
+            pgreen "'$LINE' appended to $FILE!"
+        else
+            return 1
+        fi
+    else
+        pgreen "'$LINE' already exists in $FILE."
+    fi
+}
+export -f add_line
+
+
+set_link() {
+    local SRC="$1"
+    local TGT="$2"
+
+    if [ -s "$SRC" ]; then
+        if [ -L "$SRC" ] && [ "$(readlink $SRC)" = "$TGT" ]; then
+            pgreen "$SRC already configured.";
+            return 0
+        fi
+        pred "$SRC already exists."
+        return 1
+    fi
+    ln -s $TGT $SRC && pgreen "$SRC configured!"
+}
+export -f set_link

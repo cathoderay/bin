@@ -1,87 +1,5 @@
 #!/bin/bash
 
-command_counter() {
-    history | 
-      awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | 
-      sort -rn | 
-      head
-}
-
-command_exists() {
-    command -v $1 &>/dev/null; # check $?
-}
-
-now() {
-    echo $(date +%s)000;
-}
-
-debug() {
-    [ $1 -le $DEBUG ] && echo -e "\033[33;1m[DEBUG] $*\033[m"
-}
-
-pyc_cleaner() {
-    find . -name "*.pyc" -delete
-}
-
-prime() {
-    factor $(seq $1 $2) | awk -F': ' '{print $2}' | grep -oe '^[0-9]\+$'
-}
-
-pred() {
-    echo -e "$Red$1$Color_Off"
-}
-
-pgreen() {
-    echo -e "$Green$1$Color_Off"
-}
-
-pyellow() {
-    echo -e "$Yellow$1$Color_Off"
-}
-
-pblue() {
-    echo -e "$Blue$1$Color_Off"
-}
-
-ppurple() {
-    echo -e "$Purple$1$Color_Off"
-}
-
-pcyan() {
-    echo -e "$Cyan$1$Color_Off"
-}
-
-pwhite() {
-    echo -e "$White$1$Color_Off"
-}
-
-pbred() {
-    echo -e "$BRed$1$Color_Off"
-}
-
-pbgreen() {
-    echo -e "$BGreen$1$Color_Off"
-}
-
-pbyellow() {
-    echo -e "$BYellow$1$Color_Off"
-}
-
-pbblue() {
-    echo -e "$BBlue$1$Color_Off"
-}
-
-pbpurple() {
-    echo -e "$BPurple$1$Color_Off"
-}
-
-pbcyan() {
-    echo -e "$BCyan$1$Color_Off"
-}
-
-pbwhite() {
-    echo -e "$BWhite$1$Color_Off"
-}
 
 alias gt="git status"
 alias h="history"
@@ -90,3 +8,4 @@ alias v="vim"
 alias cc="command_counter"
 alias ce="command_exists"
 alias pycc="pyc_cleaner"
+alias pb="pythonbrew"
