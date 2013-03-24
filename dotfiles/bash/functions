@@ -131,7 +131,7 @@ add_line() {
         pred "$FILE does not exist."
         return 1
     fi
-    grep "$LINE" "$FILE"
+    grep -q "$LINE" "$FILE"
     if [ ! "$?" = 0 ]; then
         echo "$LINE" >> "$FILE"
         if [ "$?" = 0 ]; then
