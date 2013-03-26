@@ -172,6 +172,7 @@ OPTIONS:
     -g, --git
     -k, --bashmarks
     -b, --perlbrew
+    -y, --pythonbrew
     -p, --packages
     -h, --help"
 }
