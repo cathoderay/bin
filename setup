@@ -166,6 +166,7 @@ print_help() {
 
 OPTIONS:
     -a, --all
+    -p, --packages
     -r, --bashrc
     -v, --vim
     -s, --ssh
@@ -173,7 +174,6 @@ OPTIONS:
     -k, --bashmarks
     -b, --perlbrew
     -y, --pythonbrew
-    -p, --packages
     -h, --help"
 }
 
@@ -181,6 +181,7 @@ OPTIONS:
 while [ -n "$1" ]
 do
     case $1 in
+        -p | --packages) install_packages ;;
         -r | --bashrc) set_bashrc ;;
         -s | --ssh) set_ssh ;;
         -v | --vim) set_vim ;;
@@ -188,8 +189,8 @@ do
         -k | --bashmarks) set_bashmarks ;;
         -b | --perlbrew) set_perlbrew ;;
         -y | --pythonbrew) set_pythonbrew ;;
-        -p | --packages) install_packages ;;
         -a | --all)
+            install_packages
             set_bashrc
             set_ssh
             set_vim
@@ -197,7 +198,6 @@ do
             set_bashmarks
             set_pythonbrew
             set_perlbrew
-            install_packages
             ;;
         -h | --help) print_help;;
         *) echo "Invalid option: $1" && print_help
