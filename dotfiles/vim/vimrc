@@ -30,7 +30,7 @@ set mouse=a
 set incsearch
 
 "colorscheme 
-colorscheme evening
+colorscheme delek
 
 "history size
 set history=1000
