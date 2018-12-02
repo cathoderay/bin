@@ -161,3 +161,16 @@ set_link() {
     ln -s $TGT $SRC && pgreen "$SRC configured!"
 }
 export -f set_link
+
+
+chefproblem() {
+    echo "\
+\"\"\"
+  Url: https://www.codechef.com/problems/$1
+\"\"\"
+
+
+__author__ = \"Ronald Kaiser\"
+__email__ = \"raios dot catodicos at gmail dot com\"
+    " > $1.py
+}
